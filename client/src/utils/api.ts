@@ -1,46 +1,60 @@
-export const getAllMatchups = () => {
-  return fetch('/api/matchup', {
-    method: 'GET',
+import type { User } from '../models/User.js';
+import type { Book } from '../models/Book.js';
+
+// route to get logged in user's info (needs the token)
+export const getMe = (token: string) => {
+  return fetch('/api/users/me', {
     headers: {
       'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
   });
 };
 
-export const createMatchup = (matchupData: { tech1: string, tech2: string }) => {
-  return fetch('/api/matchup', {
+export const createUser = (userData: User) => {
+  return fetch('/api/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(matchupData),
+    body: JSON.stringify(userData),
   });
 };
 
-export const getMatchup = (matchupId: string | undefined) => {
-  return fetch(`/api/matchup/${matchupId}`, {
-    method: 'GET',
+export const loginUser = (userData: User) => {
+  return fetch('/api/users/login', {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify(userData),
   });
 };
 
-export const createVote = (voteData: { id: string | undefined, techNum: number }) => {
-  return fetch(`/api/matchup/${voteData}`, {
+// save book data for a logged in user
+export const saveBook = (bookData: Book, token: string) => {
+  return fetch('/api/users', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(voteData),
+    body: JSON.stringify(bookData),
   });
 };
 
-export const getAllTech = () => {
-  return fetch('/api/tech', {
-    method: 'GET',
+// remove saved book data for a logged in user
+export const deleteBook = (bookId: string, token: string) => {
+  return fetch(`/api/users/books/${bookId}`, {
+    method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
   });
+};
+
+// make a search to google books api
+// https://www.googleapis.com/books/v1/volumes?q=harry+potter
+export const searchGoogleBooks = (query: string) => {
+  return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
 };
