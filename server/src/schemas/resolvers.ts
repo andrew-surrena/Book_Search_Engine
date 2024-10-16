@@ -25,7 +25,7 @@ interface LoginUserArgs {
 // link: string;
 // }
 
-interface AddBookArgs {
+interface SaveBookArgs {
     input: {
         author: [string];
         bookId: string;
@@ -36,7 +36,7 @@ interface AddBookArgs {
     }
 }
 
-interface DeleteBookArgs {
+interface RemoveBookArgs {
     bookId: string;
 }
 
@@ -88,7 +88,7 @@ const resolvers = {
             // Return the token and the user
             return { token, user };
         },
-        addBook: async (_parent: any, { input }: AddBookArgs, context: any) => {
+        saveBook: async (_parent: any, { input }: SaveBookArgs, context: any) => {
             if (context.user) {
                 // const book = await Book.create({ ...input });
 
@@ -102,7 +102,7 @@ const resolvers = {
             throw AuthenticationError;
             ('You need to be logged in!');
         },
-        deleteBook: async (_parent: any, { bookId }: DeleteBookArgs, context: any) => {
+        removeBook: async (_parent: any, { bookId }: RemoveBookArgs, context: any) => {
             if (context.user) {
                 // const book = await Book.findOneAndDelete({
                 //     bookId: bookId,
