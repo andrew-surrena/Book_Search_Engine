@@ -81,15 +81,12 @@ const SearchBooks = () => {
       return false;
     }
 
+console.log(bookToSave);
+
     try {
       await saveBook({
         variables: {
-          authors: bookToSave.authors,
-          bookId: bookToSave.bookId,
-          title: bookToSave.title,
-          description: bookToSave.description,
-          image: bookToSave.image,
-          link: bookToSave.link
+          input: { ...bookToSave }
         }
       });
 

@@ -33,6 +33,7 @@ const typeDefs = gql`
   }
 
   input UserInput {
+    username: String!
     email: String!
     password: String!
   }

@@ -28,6 +28,7 @@ export const SAVE_BOOK = gql`
   mutation Mutation($input: BookInput!) {
   saveBook(input: $input) {
     _id
+    username
     email
     savedBooks {
       authors
@@ -37,7 +38,6 @@ export const SAVE_BOOK = gql`
       link
       title
     }
-    username
   }
 }
 `;

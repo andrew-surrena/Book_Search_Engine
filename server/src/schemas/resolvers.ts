@@ -114,7 +114,11 @@ const resolvers = {
                 const updatedUser =
                     await User.findOneAndUpdate(
                         { _id: context.user._id },
-                        { $pull: { savedBooks: bookId } }
+                        { $pull: { savedBooks: {bookId: bookId} } },
+                        {
+                            new: true,
+                            runValidators: true,
+                          }
                     );
                 if (!updatedUser) {
                     return "Couldn't find user with this id!"
