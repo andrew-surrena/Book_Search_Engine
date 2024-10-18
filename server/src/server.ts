@@ -7,6 +7,12 @@ import db from './config/connection.js';
 import { authenticateToken } from './utils/auth.js';
 // import routes from './routes/index.js';
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path'
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -30,10 +36,10 @@ const startApolloServer = async () => {
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(process.cwd(), '../client/dist')));
+    app.use(express.static(path.join(__dirname, '../client/dist')));
   }
   app.get('*', (_req, res) => {
-    res.sendFile(path.join(process.cwd(), '../client/dist/index.html'));
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 
 
